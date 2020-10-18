@@ -68,4 +68,14 @@ class ImovelTest extends TestCase
         $response->assertStatus(200)
             ->assertJson(['success' => true]);
     }
+
+    public function test_imovel_pode_ser_editado()
+    {
+        $imovel = Imovel::factory()->create();
+
+        $novosDados = Imovel::factory()->make()->toArray();
+        $response = $this->putJson(self::URI . "/{$imovel->id}", $novosDados);
+
+        $response->assertJson(['success' => true]);
+    }
 }

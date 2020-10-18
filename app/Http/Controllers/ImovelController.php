@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ImovelRequest;
 use App\Http\Resources\ImovelResource;
 use App\Models\Imovel;
-use Illuminate\Http\Request;
 
 class ImovelController extends Controller
 {
@@ -43,7 +42,7 @@ class ImovelController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param Imovel $imovel
      * @return \Illuminate\Http\JsonResponse
      */
     public function show(Imovel $imovel)
@@ -57,13 +56,15 @@ class ImovelController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param ImovelRequest $request
+     * @param Imovel $imovel
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(ImovelRequest $request, Imovel $imovel)
     {
-        //
+        $imovel->update($request->validated());
+
+        return response()->json(['success' => true]);
     }
 
     /**
