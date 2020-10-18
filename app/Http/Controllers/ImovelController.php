@@ -12,11 +12,16 @@ class ImovelController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
-        //
+        $data = ImovelResource::collection(Imovel::all());
+
+        return response()->json([
+            'success' => true,
+            'data' => $data,
+        ], 200);
     }
 
     /**

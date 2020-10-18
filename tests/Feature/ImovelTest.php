@@ -41,12 +41,21 @@ class ImovelTest extends TestCase
 
     public function test_imoveis_podem_ser_listados()
     {
-        $this->markTestIncomplete();
-
-        Imovel::factory(25)->create();
+        $lista = Imovel::factory(15)->create();
 
         $response = $this->get(self::URI);
 
-        $response->assertJsonFragment(['total' => 25]);
+        $response->assertJsonCount(15, 'data')
+            ->assertJsonFragment(['id' => $lista->first()->id]);
+    }
+
+    public function test_imoveis_excluidos_nao_podem_ser_listados()
+    {
+        $lista = Imovel::factory(8)->create();
+        $lista->first()->delete();
+
+        $response = $this->get(self::URI);
+
+        $response->assertJsonCount(7, 'data');
     }
 }
