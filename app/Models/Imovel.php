@@ -15,4 +15,15 @@ class Imovel extends Model
     protected $fillable = [
         'email_proprietario', 'rua', 'numero', 'complemento', 'bairro', 'cidade', 'estado',
     ];
+
+    public function contrato()
+    {
+        return $this->hasOne(Contrato::class, 'imovel_id');
+    }
+
+    public function getStatusAttribute()
+    {
+        // todo implementar
+        return false;
+    }
 }
