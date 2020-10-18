@@ -58,4 +58,14 @@ class ImovelTest extends TestCase
 
         $response->assertJsonCount(7, 'data');
     }
+
+    public function test_imovel_pode_ser_visualizado()
+    {
+        $imovel = Imovel::factory()->create();
+
+        $response = $this->get(self::URI . "/{$imovel->id}");
+
+        $response->assertStatus(200)
+            ->assertJson(['success' => true]);
+    }
 }

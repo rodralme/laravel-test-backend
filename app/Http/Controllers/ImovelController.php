@@ -44,11 +44,14 @@ class ImovelController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show($id)
+    public function show(Imovel $imovel)
     {
-        //
+        return response()->json([
+            'success' => true,
+            'data' => new ImovelResource($imovel),
+        ]);
     }
 
     /**
