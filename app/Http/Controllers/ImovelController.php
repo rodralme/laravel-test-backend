@@ -26,7 +26,7 @@ class ImovelController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(ImovelRequest $request)
@@ -70,11 +70,14 @@ class ImovelController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Imovel $imovel
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
-        //
+        $imovel = Imovel::find($id);
+        $deleted = $imovel->delete();
+
+        return response()->json(['success' => $deleted]);
     }
 }

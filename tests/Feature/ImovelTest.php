@@ -78,4 +78,16 @@ class ImovelTest extends TestCase
 
         $response->assertJson(['success' => true]);
     }
+
+    public function test_imovel_pode_ser_excluido_logicamente()
+    {
+        $imovel = Imovel::factory()->create();
+
+        $response = $this->delete(self::URI . "/{$imovel->id}");
+
+        $response->assertJson(['success' => true]);
+
+        $imovel->refresh();
+        self::assertTrue($imovel->trashed());
+    }
 }
