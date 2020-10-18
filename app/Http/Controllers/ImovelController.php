@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ImovelRequest;
+use App\Http\Resources\ImovelResource;
+use App\Models\Imovel;
 use Illuminate\Http\Request;
 
 class ImovelController extends Controller
@@ -20,11 +23,16 @@ class ImovelController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(ImovelRequest $request)
     {
-        //
+        $imovel = Imovel::create($request->validated());
+
+        return response()->json([
+            'success' => true,
+            'data' => new ImovelResource($imovel),
+        ], 201);
     }
 
     /**
