@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ImovelResource extends JsonResource
+class ImovelListResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,7 +18,7 @@ class ImovelResource extends JsonResource
             'id' => $this->id,
             'email_proprietario' => $this->email_proprietario,
             'referencia' => $this->referencia,
-            'contratado' => $this->contrato()->exists(),
+            'contratado' => $this->contrato_count > 0,
         ];
     }
 }

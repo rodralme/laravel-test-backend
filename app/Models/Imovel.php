@@ -21,6 +21,17 @@ class Imovel extends Model
         return $this->hasOne(Contrato::class, 'imovel_id');
     }
 
+    public function getReferenciaAttribute()
+    {
+        return collect([
+            $this->rua,
+            $this->numero,
+            $this->cidade,
+            $this->estado,
+        ])->filter(fn($item) => !empty($item))
+            ->join(', ');
+    }
+
     public function getStatusAttribute()
     {
         // todo implementar

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ImovelRequest;
+use App\Http\Resources\ImovelListResource;
 use App\Http\Resources\ImovelResource;
 use App\Models\Imovel;
 
@@ -17,7 +18,7 @@ class ImovelController extends Controller
     {
         $lista = Imovel::withCount('contrato')->get();
 
-        $data = ImovelResource::collection($lista);
+        $data = ImovelListResource::collection($lista);
 
         return response()->json([
             'success' => true,
