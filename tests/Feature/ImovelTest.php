@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Contrato;
 use App\Models\Imovel;
 use Tests\TestCase;
 
@@ -47,6 +48,19 @@ class ImovelTest extends TestCase
 
         $response->assertJsonCount(15, 'data')
             ->assertJsonFragment(['id' => $lista->first()->id]);
+    }
+
+    public function test_imoveis_listados_exibem_status_corretamente()
+    {
+        $imovel1 = Imovel::factory()->create();
+        $imovel2 = Imovel::factory()->create();
+        Contrato::factory()->create(['imovel_id' => $imovel2->id]);
+
+        $response = $this->get(self::URI);
+
+        $response->assertJsonCount(2, 'data')
+            ->assertJsonFragment(['id' => $imovel1->id, 'contratado' => false])
+            ->assertJsonFragment(['id' => $imovel2->id, 'contratado' => true]);
     }
 
     public function test_imoveis_excluidos_nao_podem_ser_listados()

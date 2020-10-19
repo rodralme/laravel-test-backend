@@ -26,7 +26,7 @@ class ImovelResource extends JsonResource
             'id' => $this->id,
             'email_proprietario' => $this->email_proprietario,
             'referencia' => $referencia,
-            'status' => $this->status,
+            'contratado' => $this->contrato_count > 0,
         ];
     }
 }

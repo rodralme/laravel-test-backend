@@ -15,7 +15,9 @@ class ImovelController extends Controller
      */
     public function index()
     {
-        $data = ImovelResource::collection(Imovel::all());
+        $lista = Imovel::withCount('contrato')->get();
+
+        $data = ImovelResource::collection($lista);
 
         return response()->json([
             'success' => true,
