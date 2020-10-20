@@ -1,14 +1,33 @@
 <template>
-    <div class="bg-red-100">
-        <h1>Laravel Test Backend</h1>
+    <div class="h-screen flex">
+        <!-- Menu -->
+        <ul class="w-48 py-4 bg-gray-800">
+            <li>
+                <router-link :to="{name: 'imoveis'}">
+                    <div class="px-4 py-4 text-gray-300 hover:text-white hover:bg-gray-700">
+                        Imóveis
+                    </div>
+                </router-link>
+            </li>
+            <li>
+                <router-link :to="{name: 'contratos'}">
+                    <div class="px-4 py-4 text-gray-300 hover:text-white hover:bg-gray-700">
+                        Contratos
+                    </div>
+                </router-link>
+            </li>
+        </ul>
 
-        <div>
-            <router-link :to="{name: 'imoveis'}">Imóveis</router-link>
-            |
-            <router-link :to="{name: 'contratos'}">Contratos</router-link>
+        <!-- Content -->
+        <div class="flex-1">
+            <div class="w-full text-center p-6 bg-gray-100 border-b text-gray-700 text-2xl">
+                <h1>Laravel Test Backend</h1>
+            </div>
+
+            <div class="p-6">
+                <router-view/>
+            </div>
         </div>
-
-        <router-view></router-view>
     </div>
 </template>
 
