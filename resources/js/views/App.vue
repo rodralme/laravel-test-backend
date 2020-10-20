@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="bg-red-100">
         <h1>Laravel Test Backend</h1>
 
         <div>
