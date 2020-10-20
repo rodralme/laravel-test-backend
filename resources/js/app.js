@@ -5,6 +5,7 @@ Vue.use(VueRouter)
 
 import App from './views/App'
 import Imoveis from './views/imoveis/Index'
+import FormImoveis from './views/imoveis/Form'
 import Contratos from './views/contratos/Index'
 
 const router = new VueRouter({
@@ -14,6 +15,11 @@ const router = new VueRouter({
             path: '/',
             name: 'imoveis',
             component: Imoveis,
+        },
+        {
+            path: '/imoveis/novo',
+            name: 'cadastro-imoveis',
+            component: FormImoveis,
         },
         {
             path: '/contratos',
