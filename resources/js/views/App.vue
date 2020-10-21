@@ -20,9 +20,9 @@
 
         <!-- Content -->
         <div class="flex-1">
-            <div class="w-full text-center p-6 bg-gray-100 border-b text-gray-700 text-2xl">
-                <h1>Laravel Test Backend</h1>
-            </div>
+            <p class="w-full text-center p-6 bg-gray-100 border-b text-gray-700 text-2xl font-bold">
+                Laravel Test Backend
+            </p>
 
             <div class="p-6">
                 <router-view/>

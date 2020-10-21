@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Contrato;
+use App\Models\Imovel;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,6 +15,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        // cria contratos com imoveis
+        Contrato::factory(10)->create();
+
+        // cria imóveis sem contrato
+        Imovel::factory(6)->create();
     }
 }
