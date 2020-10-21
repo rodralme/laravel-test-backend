@@ -56,17 +56,26 @@
                 </li>
             </ul>
 
-            <div class="py-4 flex justify-center space-x-4">
+            <ul
+                v-show="Object.keys(errors).length"
+                class="errors mt-6 py-4 border border-red-500 rounded-md bg-red-100 text-red-500"
+            >
+                <li v-for="field in errors" class="px-6 leading-relaxed">
+                    <div v-for="error in field">{{ error }}</div>
+                </li>
+            </ul>
+
+            <div class="py-6 flex justify-center space-x-4">
                 <button
                     type="submit"
-                    :class="'px-4 py-2 bg-blue-600 text-gray-100 ' + (!loading || 'opacity-50 cursor-not-allowed')"
+                    :class="'px-4 py-2 bg-blue-600 text-gray-100 rounded-md ' + (!loading || 'opacity-50 cursor-not-allowed')"
                     :disabled="loading"
                 >
                     {{ loading ? 'Aguarde...' : 'Cadastrar' }}
                 </button>
                 <router-link
                     :to="{name: 'imoveis'}"
-                    class="px-4 py-2 bg-blue-600 text-gray-100"
+                    class="px-4 py-2 bg-blue-600 text-gray-100 rounded-md"
                 >
                     Voltar
                 </router-link>
@@ -85,6 +94,7 @@
         data: () => ({
             model: {},
             loading: false,
+            errors: {},
         }),
 
         methods: {
@@ -97,8 +107,13 @@
                     } else {
                         console.log('Erro ao cadastrar o imóvel')
                     }
-                } catch (e) {
-                    console.log(e)
+                    this.model = {}
+                } catch (error) {
+                    if (error.response.status === 422) {
+                        this.errors = error.response.data.errors
+                        return
+                    }
+                    throw error
                 } finally {
                     this.loading = false
                 }

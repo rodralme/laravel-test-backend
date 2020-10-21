@@ -3,7 +3,7 @@
         <div>
             <router-link
                 :to="{name: 'cadastro-imoveis'}"
-                class="px-4 py-2 bg-blue-600 text-gray-100"
+                class="px-4 py-2 bg-blue-600 text-gray-100 rounded-md"
             >
                 Novo imóvel
             </router-link>
