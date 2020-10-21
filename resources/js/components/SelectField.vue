@@ -4,14 +4,17 @@
             {{ label }}
         </label>
         <div class="flex-1">
-            <input
+            <select
                 :value="value"
                 :id="name"
                 :name="name"
-                type="text"
-                :class="'px-3 py-2 border rounded-md w-full focus:outline-none ' + (!error || 'border-red-500')"
-                @input="$emit('input', $event.target.value)"
-            />
+                :class="'px-3 py-3 border rounded-md w-full bg-white focus:outline-none ' + (!error || 'border-red-500')"
+                @change="$emit('input', $event.target.value)"
+            >
+                <option v-for="item in items" :key="item.value" :value="item.value">
+                    {{ item.label }}
+                </option>
+            </select>
             <div v-if="error" class="text-sm text-red-500 mt-1">
                 {{ Array.isArray(error) ? error[0] : error }}
             </div>
@@ -21,8 +24,8 @@
 
 <script>
     export default {
-        name: 'text-field',
+        name: 'select-field',
 
-        props: ['value', 'name', 'label', 'error'],
+        props: ['value', 'name', 'label', 'error', 'items'],
     }
 </script>

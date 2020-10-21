@@ -54,11 +54,12 @@
                     />
                 </li>
                 <li class="px-4 py-4 border-b">
-                    <text-field
+                    <select-field
                         v-model="model.estado"
                         :error="errors.estado"
                         name="estado"
                         label="Estado"
+                        :items="estados"
                     />
                 </li>
             </ul>
@@ -85,14 +86,16 @@
 <script>
     import axios from 'axios'
     import TextField from "../../components/TextField"
+    import SelectField from "../../components/SelectField"
 
     export default {
-        components: {TextField},
+        components: {TextField, SelectField},
 
         data: () => ({
             model: {},
             loading: false,
             errors: {},
+            estados: window.enums.UF,
         }),
 
         methods: {
