@@ -1,65 +1,50 @@
 <template>
     <div class="text-gray-700">
         <h2 class="w-full text-xl font-bold pb-6">
-            Cadastro de Imóvel
+            Cadastro de Contratos
         </h2>
         <form @submit.prevent="cadastrar">
             <ul class="border rounded-md">
                 <li class="px-4 py-4 border-b">
-                    <text-field
-                        v-model="model.email_proprietario"
-                        :error="errors.email_proprietario"
-                        name="email_proprietario"
-                        label="E-mail do proprietário"
-                    />
-                </li>
-                <li class="px-4 py-4 border-b">
-                    <text-field
-                        v-model="model.rua"
-                        :error="errors.rua"
-                        name="rua"
-                        label="Rua"
-                    />
-                </li>
-                <li class="px-4 py-4 border-b">
-                    <text-field
-                        v-model="model.numero"
-                        :error="errors.numero"
-                        name="numero"
-                        label="Número"
-                    />
-                </li>
-                <li class="px-4 py-4 border-b">
-                    <text-field
-                        v-model="model.complemento"
-                        :error="errors.complemento"
-                        name="complemento"
-                        label="Complemento"
-                    />
-                </li>
-                <li class="px-4 py-4 border-b">
-                    <text-field
-                        v-model="model.bairro"
-                        :error="errors.bairro"
-                        name="bairro"
-                        label="Bairro"
-                    />
-                </li>
-                <li class="px-4 py-4 border-b">
-                    <text-field
-                        v-model="model.cidade"
-                        :error="errors.cidade"
-                        name="cidade"
-                        label="Cidade"
+                    <select-field
+                        v-model="model.imovel_id"
+                        :error="errors.imovel_id"
+                        name="imovel_id"
+                        label="Imóvel"
+                        :items="imoveisDisponiveis"
                     />
                 </li>
                 <li class="px-4 py-4 border-b">
                     <select-field
-                        v-model="model.estado"
-                        :error="errors.estado"
-                        name="estado"
-                        label="Estado"
-                        :items="estados"
+                        v-model="model.tipo_pessoa"
+                        :error="errors.tipo_pessoa"
+                        name="tipo_pessoa"
+                        label="Tipo pessoa"
+                        :items="tiposPessoa"
+                    />
+                </li>
+                <li class="px-4 py-4 border-b">
+                    <text-field
+                        v-model="model.documento"
+                        :error="errors.documento"
+                        name="documento"
+                        label="Documento"
+                    />
+                </li>
+                <li class="px-4 py-4 border-b">
+                    <text-field
+                        v-model="model.email_contratante"
+                        :error="errors.email_contratante"
+                        name="email_contratante"
+                        label="E-mail do contratante"
+                    />
+                </li>
+                <li class="px-4 py-4 border-b">
+                    <text-field
+                        v-model="model.nome_contratante"
+                        :error="errors.nome_contratante"
+                        name="nome_contratante"
+                        label="Nome do contratante"
                     />
                 </li>
             </ul>
@@ -73,7 +58,7 @@
                     {{ loading ? 'Aguarde...' : 'Cadastrar' }}
                 </button>
                 <router-link
-                    :to="{name: 'imoveis.index'}"
+                    :to="{name: 'contratos.index'}"
                     class="px-4 py-2 bg-blue-600 text-gray-100 rounded-md"
                 >
                     Voltar
@@ -95,19 +80,24 @@
             model: {},
             loading: false,
             errors: {},
-            estados: window.enums.UF,
+            tiposPessoa: window.enums.TipoPessoa,
+            imoveisDisponiveis: [],
         }),
+
+        async created() {
+            this.carregarImoveisDisponiveis()
+        },
 
         methods: {
             validar() {
                 // required
-                ['email_proprietario', 'rua', 'bairro', 'cidade', 'estado']
+                ['imovel_id', 'tipo_pessoa', 'documento', 'email_contratante', 'nome_contratante']
                     .forEach(field => !!this.model[field] || (this.errors[field] = 'Campo obrigatório'))
 
                 // e-mail
                 const regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-                if (!this.errors.email_proprietario && !regex.test(this.model.email_proprietario)) {
-                    this.errors.email_proprietario = 'E-mail inválido'
+                if (!this.errors.email_contratante && !regex.test(this.model.email_contratante)) {
+                    this.errors.email_contratante = 'E-mail inválido'
                 }
             },
 
@@ -120,13 +110,14 @@
                     return
                 }
                 try {
-                    const {data} = await axios.post('/api/imoveis', this.model)
+                    const {data} = await axios.post('/api/contratos', this.model)
                     if (data.success) {
                         console.log('OK')
                     } else {
-                        console.log('Erro ao cadastrar o imóvel')
+                        console.log('Erro ao cadastrar o contrato')
                     }
                     this.model = {}
+                    this.carregarImoveisDisponiveis()
                 } catch (error) {
                     if (error.response.status === 422) {
                         this.errors = error.response.data.errors
@@ -135,6 +126,16 @@
                     throw error
                 } finally {
                     this.loading = false
+                }
+            },
+
+            async carregarImoveisDisponiveis() {
+                const {data} = await axios.get('/api/imoveis/disponiveis')
+                if (data.success) {
+                    this.imoveisDisponiveis = data.data
+                } else {
+                    console.log('Não foi possível obter a lista de imóveis disponíveis')
+                    this.imoveisDisponiveis = []
                 }
             }
         }

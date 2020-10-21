@@ -10,8 +10,8 @@ class TipoPessoa extends BaseEnum
     public static function labels()
     {
         return [
-            self::FISICA => 'Física',
-            self::JURIDICA => 'Jurídica',
+            self::FISICA => 'Pessoa Física',
+            self::JURIDICA => 'Pessoa Jurídica',
         ];
     }
 }

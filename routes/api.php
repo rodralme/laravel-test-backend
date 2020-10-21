@@ -18,6 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('imoveis/disponiveis', [\App\Http\Controllers\ImovelController::class, 'disponiveis']);
 Route::apiResource('imoveis', \App\Http\Controllers\ImovelController::class);
 
 Route::post('contratos', [\App\Http\Controllers\ContratoController::class, 'store']);

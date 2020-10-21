@@ -32,9 +32,14 @@ class Imovel extends Model
             ->join(', ');
     }
 
-    public function getStatusAttribute()
+    public function getDescricaoAttribute()
     {
-        // todo implementar
-        return false;
+        return collect([
+            $this->rua,
+            $this->numero,
+            $this->complemento,
+            $this->bairro,
+        ])->filter(fn($item) => !empty($item))
+            ->join(', ');
     }
 }

@@ -83,4 +83,23 @@ class ImovelController extends Controller
 
         return response()->json(['success' => $deleted]);
     }
+
+
+    public function disponiveis()
+    {
+        $imoveis = Imovel::whereDoesntHave('contrato')
+            ->get()
+            ->map(function ($imovel) {
+                return [
+                    'value' => $imovel->id,
+                    'label' => $imovel->descricao,
+                ];
+            })
+            ->all();
+
+        return response()->json([
+            'success' => true,
+            'data' => $imoveis,
+        ]);
+    }
 }

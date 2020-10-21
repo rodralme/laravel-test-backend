@@ -3,14 +3,14 @@
         <!-- Menu -->
         <ul class="w-48 py-4 bg-gray-800">
             <li>
-                <router-link :to="{name: 'imoveis'}">
+                <router-link :to="{name: 'imoveis.index'}">
                     <div class="px-4 py-4 text-gray-300 hover:text-white hover:bg-gray-700">
                         Imóveis
                     </div>
                 </router-link>
             </li>
             <li>
-                <router-link :to="{name: 'contratos'}">
+                <router-link :to="{name: 'contratos.index'}">
                     <div class="px-4 py-4 text-gray-300 hover:text-white hover:bg-gray-700">
                         Contratos
                     </div>

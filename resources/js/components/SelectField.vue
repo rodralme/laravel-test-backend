@@ -11,6 +11,7 @@
                 :class="'px-3 py-3 border rounded-md w-full bg-white focus:outline-none ' + (!error || 'border-red-500')"
                 @change="$emit('input', $event.target.value)"
             >
+                <option value="">(Selecione)</option>
                 <option v-for="item in items" :key="item.value" :value="item.value">
                     {{ item.label }}
                 </option>
