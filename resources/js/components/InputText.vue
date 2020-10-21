@@ -3,14 +3,19 @@
         <label :for="name" class="w-64 inline-block">
             {{ label }}
         </label>
-        <input
-            :value="value"
-            :id="name"
-            :name="name"
-            type="text"
-            class="px-3 py-2 border rounded-md flex-1"
-            @input="$emit('input', $event.target.value)"
-        />
+        <div class="flex-1">
+            <input
+                :value="value"
+                :id="name"
+                :name="name"
+                type="text"
+                :class="'px-3 py-2 border rounded-md w-full focus:outline-none ' + (!error || 'border-red-500')"
+                @input="$emit('input', $event.target.value)"
+            />
+            <div v-if="error" class="text-red-500 mt-1">
+                {{ Array.isArray(error) ? error[0] : error }}
+            </div>
+        </div>
     </div>
 </template>
 
@@ -18,6 +23,6 @@
     export default {
         name: 'input-text',
 
-        props: ['value', 'name', 'label'],
+        props: ['value', 'name', 'label', 'error'],
     }
 </script>

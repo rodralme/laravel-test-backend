@@ -8,6 +8,7 @@
                 <li class="px-4 py-4 border-b">
                     <input-text
                         v-model="model.email_proprietario"
+                        :error="errors.email_proprietario"
                         name="email_proprietario"
                         label="E-mail do proprietário"
                     />
@@ -15,6 +16,7 @@
                 <li class="px-4 py-4 border-b">
                     <input-text
                         v-model="model.rua"
+                        :error="errors.rua"
                         name="rua"
                         label="Rua"
                     />
@@ -22,6 +24,7 @@
                 <li class="px-4 py-4 border-b">
                     <input-text
                         v-model="model.numero"
+                        :error="errors.numero"
                         name="numero"
                         label="Número"
                     />
@@ -29,6 +32,7 @@
                 <li class="px-4 py-4 border-b">
                     <input-text
                         v-model="model.complemento"
+                        :error="errors.complemento"
                         name="complemento"
                         label="Complemento"
                     />
@@ -36,6 +40,7 @@
                 <li class="px-4 py-4 border-b">
                     <input-text
                         v-model="model.bairro"
+                        :error="errors.bairro"
                         name="bairro"
                         label="Bairro"
                     />
@@ -43,6 +48,7 @@
                 <li class="px-4 py-4 border-b">
                     <input-text
                         v-model="model.cidade"
+                        :error="errors.cidade"
                         name="cidade"
                         label="Cidade"
                     />
@@ -50,18 +56,10 @@
                 <li class="px-4 py-4 border-b">
                     <input-text
                         v-model="model.estado"
+                        :error="errors.estado"
                         name="estado"
                         label="Estado"
                     />
-                </li>
-            </ul>
-
-            <ul
-                v-show="Object.keys(errors).length"
-                class="errors mt-6 py-4 border border-red-500 rounded-md bg-red-100 text-red-500"
-            >
-                <li v-for="field in errors" class="px-6 leading-relaxed">
-                    <div v-for="error in field">{{ error }}</div>
                 </li>
             </ul>
 
@@ -98,8 +96,26 @@
         }),
 
         methods: {
+            validar() {
+                // required
+                ['email_proprietario', 'rua', 'bairro', 'cidade', 'estado']
+                    .forEach(field => !!this.model[field] || (this.errors[field] = 'Campo obrigatório'))
+
+                // e-mail
+                const regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                if (!this.errors.email_proprietario && !regex.test(this.model.email_proprietario)) {
+                    this.errors.email_proprietario = 'E-mail inválido'
+                }
+            },
+
             async cadastrar() {
                 this.loading = true
+                this.errors = {}
+                this.validar()
+                if (Object.keys(this.errors).length) {
+                    this.loading = false
+                    return
+                }
                 try {
                     const {data} = await axios.post('/api/imoveis', this.model)
                     if (data.success) {
