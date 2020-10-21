@@ -6,7 +6,7 @@
         <form @submit.prevent="cadastrar">
             <ul class="border rounded-md">
                 <li class="px-4 py-4 border-b">
-                    <input-text
+                    <text-field
                         v-model="model.email_proprietario"
                         :error="errors.email_proprietario"
                         name="email_proprietario"
@@ -14,7 +14,7 @@
                     />
                 </li>
                 <li class="px-4 py-4 border-b">
-                    <input-text
+                    <text-field
                         v-model="model.rua"
                         :error="errors.rua"
                         name="rua"
@@ -22,7 +22,7 @@
                     />
                 </li>
                 <li class="px-4 py-4 border-b">
-                    <input-text
+                    <text-field
                         v-model="model.numero"
                         :error="errors.numero"
                         name="numero"
@@ -30,7 +30,7 @@
                     />
                 </li>
                 <li class="px-4 py-4 border-b">
-                    <input-text
+                    <text-field
                         v-model="model.complemento"
                         :error="errors.complemento"
                         name="complemento"
@@ -38,7 +38,7 @@
                     />
                 </li>
                 <li class="px-4 py-4 border-b">
-                    <input-text
+                    <text-field
                         v-model="model.bairro"
                         :error="errors.bairro"
                         name="bairro"
@@ -46,7 +46,7 @@
                     />
                 </li>
                 <li class="px-4 py-4 border-b">
-                    <input-text
+                    <text-field
                         v-model="model.cidade"
                         :error="errors.cidade"
                         name="cidade"
@@ -54,7 +54,7 @@
                     />
                 </li>
                 <li class="px-4 py-4 border-b">
-                    <input-text
+                    <text-field
                         v-model="model.estado"
                         :error="errors.estado"
                         name="estado"
@@ -84,10 +84,10 @@
 
 <script>
     import axios from 'axios'
-    import InputText from "../../components/InputText"
+    import TextField from "../../components/TextField"
 
     export default {
-        components: {InputText},
+        components: {TextField},
 
         data: () => ({
             model: {},

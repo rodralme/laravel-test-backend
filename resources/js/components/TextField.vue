@@ -12,7 +12,7 @@
                 :class="'px-3 py-2 border rounded-md w-full focus:outline-none ' + (!error || 'border-red-500')"
                 @input="$emit('input', $event.target.value)"
             />
-            <div v-if="error" class="text-red-500 mt-1">
+            <div v-if="error" class="text-sm text-red-500 mt-1">
                 {{ Array.isArray(error) ? error[0] : error }}
             </div>
         </div>
