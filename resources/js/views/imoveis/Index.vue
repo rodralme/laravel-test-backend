@@ -19,11 +19,20 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="item in lista" class="border-b text-gray-800">
+            <tr v-for="item in lista" class="border-b text-gray-800 text-sm">
                 <td>{{ item.email_proprietario }}</td>
                 <td>{{ item.referencia }}</td>
-                <td>{{ item.status }}</td>
-                <td></td>
+                <td :class="item.contratado ? 'text-green-700' : 'text-blue-700'">
+                    {{ item.contratado ? 'Contratado' : 'Não contratado' }}
+                </td>
+                <td>
+                    <button
+                        @click.prevent="remover(item.id)"
+                        class="text-red-500 underline focus:outline-none hover:text-red-800"
+                    >
+                        remover
+                    </button>
+                </td>
             </tr>
             </tbody>
         </table>
@@ -49,6 +58,16 @@ export default {
                 this.lista = data.data
             } else {
                 console.log('Erro ao obter lista de imóveis')
+            }
+        },
+
+        async remover(id) {
+            const {data} = await axios.delete('/api/imoveis/' + id)
+            if (data.success) {
+                this.lista = this.lista.filter(item => item.id !== id)
+                console.log('Imóvel removido com sucesso')
+            } else {
+                console.log('Erro ao remover imóvel')
             }
         }
     },
