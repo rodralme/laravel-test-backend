@@ -7,6 +7,13 @@
     <title>{{ config('app.name') }}</title>
 
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+
+    <script>
+        window.enums = {}
+        @foreach ($enums as $name => $values)
+            window.enums["{{ $name }}"] = @json($values);
+        @endforeach
+    </script>
 </head>
 <body>
     <div id="app"></div>
