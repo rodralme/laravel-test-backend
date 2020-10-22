@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use App\Enums\TipoPessoa;
+use App\Rules\CNPJValidoRule;
+use App\Rules\CPFValidoRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ContratoRequest extends FormRequest
@@ -27,7 +29,11 @@ class ContratoRequest extends FormRequest
         return [
             'imovel_id' => 'required',
             'tipo_pessoa' => 'required|in:' . join(',', TipoPessoa::values()),
-            'documento' => 'required',
+            'documento' => [
+                'required',
+                $this->input('tipo_pessoa') === TipoPessoa::FISICA
+                    ? new CPFValidoRule() : new CNPJValidoRule(),
+            ],
             'email_contratante' => 'required|email',
             'nome_contratante' => 'required',
         ];
