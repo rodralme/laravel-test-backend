@@ -11,6 +11,7 @@
                         :error="errors.email_proprietario"
                         name="email_proprietario"
                         label="E-mail do proprietário"
+                        autofocus
                     />
                 </li>
                 <li class="px-4 py-4 border-b">

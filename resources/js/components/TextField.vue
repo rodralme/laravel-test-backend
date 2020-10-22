@@ -5,11 +5,12 @@
         </label>
         <div class="flex-1">
             <input
+                v-bind="$attrs"
                 :value="value"
                 :id="name"
                 :name="name"
                 type="text"
-                :class="'px-3 py-2 border rounded-md w-full focus:outline-none ' + (!error || 'border-red-500')"
+                :class="'px-3 py-2 border rounded-md w-full focus:outline-none focus:border-blue-400 ' + (!error || 'border-red-500')"
                 @input="$emit('input', $event.target.value)"
             />
             <div v-if="error" class="text-sm text-red-500 mt-1">

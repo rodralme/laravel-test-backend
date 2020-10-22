@@ -5,10 +5,11 @@
         </label>
         <div class="flex-1">
             <select
+                v-bind="$attrs"
                 :value="value"
                 :id="name"
                 :name="name"
-                :class="'px-3 py-3 border rounded-md w-full bg-white focus:outline-none ' + (!error || 'border-red-500')"
+                :class="'px-3 py-3 border rounded-md w-full bg-white focus:outline-none focus:border-blue-400 ' + (!error || 'border-red-500')"
                 @change="$emit('input', $event.target.value)"
             >
                 <option value="">(Selecione)</option>

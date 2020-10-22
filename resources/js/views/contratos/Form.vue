@@ -9,9 +9,10 @@
                     <select-field
                         v-model="model.imovel_id"
                         :error="errors.imovel_id"
+                        :items="imoveisDisponiveis"
                         name="imovel_id"
                         label="Imóvel"
-                        :items="imoveisDisponiveis"
+                        autofocus
                     />
                 </li>
                 <li class="px-4 py-4 border-b">
