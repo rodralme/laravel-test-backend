@@ -27,7 +27,9 @@
                 <li class="px-4 py-4 border-b">
                     <text-field
                         v-model="model.documento"
+                        v-mask="mascaraDocumento"
                         :error="errors.documento"
+                        :disabled="!model.tipo_pessoa"
                         name="documento"
                         label="Documento"
                     />
@@ -71,11 +73,14 @@
 
 <script>
     import axios from 'axios'
+    import {mask} from 'vue-the-mask'
     import TextField from "../../components/TextField"
     import SelectField from "../../components/SelectField"
 
     export default {
         components: {TextField, SelectField},
+
+        directives: {mask},
 
         data: () => ({
             model: {},
@@ -83,10 +88,18 @@
             errors: {},
             tiposPessoa: window.enums.TipoPessoa,
             imoveisDisponiveis: [],
+            mascaraDocumento: '###.###.###-##',
         }),
 
         async created() {
             this.carregarImoveisDisponiveis()
+        },
+
+        watch: {
+            'model.tipo_pessoa': function(val) {
+                this.model.documento = ''
+                this.mascaraDocumento = val === 'fisica' ? '###.###.###-##' : '##.###.###/####-##'
+            }
         },
 
         methods: {
