@@ -3,9 +3,11 @@
 namespace App\Http\Requests;
 
 use App\Enums\TipoPessoa;
+use App\Models\Contrato;
 use App\Rules\CNPJValidoRule;
 use App\Rules\CPFValidoRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Validator;
 
 class ContratoRequest extends FormRequest
 {
@@ -37,5 +39,20 @@ class ContratoRequest extends FormRequest
             'email_contratante' => 'required|email',
             'nome_contratante' => 'required',
         ];
+    }
+
+    /**
+     * Validações customizadas.
+     *
+     * @param \Illuminate\Validation\Validator $validator
+     * @return void
+     */
+    public function withValidator($validator)
+    {
+        $validator->after(function (Validator $validator) {
+            if (Contrato::where('imovel_id', $this->input('imovel_id'))->exists()) {
+                $validator->errors()->add('imovel_contratado', 'Imovél já contratado');
+            }
+        });
     }
 }
