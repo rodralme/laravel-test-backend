@@ -12,7 +12,9 @@
         <table class="datatable mt-6 w-full border">
             <thead>
             <tr class="bg-gray-800 text-gray-200">
-                <td class="px-3 py-2">E-mail do proprietário</td>
+                <database-column-header v-model="sort" to="email_proprietario">
+                    E-mail do proprietário
+                </database-column-header>
                 <td class="px-3 py-2">Referência</td>
                 <td class="px-3 py-2">Status</td>
                 <td></td>
@@ -41,10 +43,14 @@
 
 <script>
 import axios from 'axios'
+import DatabaseColumnHeader from "../../components/DatabaseColumnHeader";
 
 export default {
+    components: {DatabaseColumnHeader},
+
     data: () => ({
         lista: [],
+        sort: {},
     }),
 
     created() {
@@ -78,7 +84,6 @@ export default {
 .datatable > tbody > tr:last-child {
     border: none;
 }
-
 .datatable tr > td {
     padding: 0.5rem 0.75rem;
 }
