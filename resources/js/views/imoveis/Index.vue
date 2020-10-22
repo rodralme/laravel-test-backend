@@ -57,9 +57,15 @@ export default {
         this.fetchData()
     },
 
+    watch: {
+        sort() {
+            this.fetchData()
+        }
+    },
+
     methods: {
         async fetchData() {
-            const {data} = await axios.get('/api/imoveis')
+            const {data} = await axios.get('/api/imoveis', { params: this.sort })
             if (data.success) {
                 this.lista = data.data
             } else {

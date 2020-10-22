@@ -6,6 +6,7 @@ use App\Http\Requests\ImovelRequest;
 use App\Http\Resources\ImovelListResource;
 use App\Http\Resources\ImovelResource;
 use App\Models\Imovel;
+use Illuminate\Http\Request;
 
 class ImovelController extends Controller
 {
@@ -14,9 +15,14 @@ class ImovelController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(Request $request)
     {
-        $lista = Imovel::withCount('contrato')->get();
+        $lista = Imovel::withCount('contrato')
+            ->orderBy(
+                $request->input('field', 'id'),
+                $request->input('order', 'asc')
+            )
+            ->get();
 
         $data = ImovelListResource::collection($lista);
 
