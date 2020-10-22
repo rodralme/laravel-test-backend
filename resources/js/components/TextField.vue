@@ -10,7 +10,7 @@
                 :id="name"
                 :name="name"
                 type="text"
-                :class="'px-3 py-2 border rounded-md w-full focus:outline-none focus:border-blue-400 ' + (!error || 'border-red-500')"
+                :class="classes"
                 @input="$emit('input', $event.target.value)"
             />
             <div v-if="error" class="text-sm text-red-500 mt-1">
@@ -25,5 +25,12 @@
         name: 'text-field',
 
         props: ['value', 'name', 'label', 'error'],
+
+        computed: {
+            classes() {
+                return 'px-3 py-2 border rounded-md w-full focus:outline-none focus:border-blue-400'
+                    + (!this.error ? '' : ' border-red-500');
+            }
+        },
     }
 </script>
