@@ -5,7 +5,7 @@ namespace Tests\Unit;
 use App\Rules\CPFValidoRule;
 use PHPUnit\Framework\TestCase;
 
-class TestCPFRule extends TestCase
+class TestCPFRuleTest extends TestCase
 {
     /**
      * @var CPFValidoRule

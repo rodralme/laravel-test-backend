@@ -5,7 +5,7 @@ namespace Tests\Unit;
 use App\Rules\CNPJValidoRule;
 use PHPUnit\Framework\TestCase;
 
-class TestCNPJRule extends TestCase
+class TestCNPJRuleTest extends TestCase
 {
     /**
      * @var CNPJValidoRule
